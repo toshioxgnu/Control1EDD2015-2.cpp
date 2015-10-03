@@ -1,0 +1,71 @@
+#include <iostream>
+
+using namespace std;
+
+int sumaDig(int num)
+{
+    int s=0;
+    while(num > 0){
+        s = s + num%10;
+        num = num / 10;
+    }
+    return s;
+}
+int menorSuma(int A[], int n){
+    int i, sum, pos=0, Menor=9999;
+     for(i=0; i<n; i++){
+        sum = sumaDig(A[i]);
+        if(sum < Menor){
+            Menor = sum;
+            pos = i;
+        }
+     }
+
+     return pos;
+}
+
+void Revisa(int A[], int n, int num, int &cantidad){
+    int pot=1;
+    int i;
+    int auxnum = num;
+    cantidad = 0;
+    //genera potencia dependiendo de la cantidad de dig
+    while(auxnum > 0){
+        pot = pot * 10;
+        auxnum = auxnum / 10;
+    }
+    for(i=0;i<n; i++){
+          int resto = A[i] % pot;
+          if (resto == num)
+            cantidad++;
+    }
+}
+
+int SumaFin52(int A[], int n){
+    if(n==0)
+        return 0;
+    else
+        if(A[n-1]%10 == 5 || A[n-1]%10 == 2)
+            return A[n-1] + SumaFin52(A,n-1);
+        else
+            return 0 + SumaFin52(A,n-1);
+
+}
+
+int main()
+{
+    cout << "Incio programa" << endl;
+    int A[10];
+    int cant;
+    A[0] = 231;
+    A[1] = 123;
+    A[2] = 235;
+    A[3] = 423;
+    A[4] = 5;
+    A[5] = 665;
+    cout << " Posicion = " << menorSuma(A,6) << endl;
+    Revisa(A,6,23,cant);
+    cout << "Cantidad = " << cant << endl;
+    cout << "suma de 5 o 2 = " << SumaFin52(A,6) << endl;
+    return 0;
+}
